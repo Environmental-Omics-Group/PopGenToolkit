@@ -1,3 +1,0 @@
-[submodule "src/vcflib"]
-	path = src/vcflib
-	url = https://github.com/Environmental-Omics-Group/vcflib.git
