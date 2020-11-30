@@ -2,7 +2,7 @@
 #  -*- coding: utf-8 -*-
 
 """
-TAFT Parallel Runner
+HMM Modelling Parallel Runner
 
 author(s): Albert (aki) Zhou
 added: 11-10-2019
