@@ -13,7 +13,7 @@ added: 05-11-2020
 import os
 import numpy as np
 from operator import itemgetter
-from kagami.comm import smap, pmap, fold, unpack, paste, checkall, fileName, checkInputFile, checkOutputDir
+from kagami.comm import smap, pmap, fold, unpack, paste, checkall, checkany, fileName, checkInputFile, checkOutputDir
 from kagami.portals import tablePortal
 from kagami.dtypes import Table
 
@@ -99,8 +99,13 @@ if __name__ == '__main__':
     sids = fold(smap(ctabs, lambda x: x.rows_), lambda x,y: np.intersect1d(x,y))
     print(f'  > [{len(sids)}] loci shared in input files')
 
+    ctabs = smap(ctabs, lambda x: x[sids])
+    if checkany(ctabs, lambda x: 0 in x.X_):
+        print('  > zero count(s) found, add 1 to all counts for valid TAFT input')
+        for t in ctabs: t.X_ += 1
+    
     print(f'  > generating batches ...')
-    olns = _genInfo(smap(ctabs, lambda x: x[sids]))
+    olns = _genInfo(ctabs)
     ochk = _genBatch(olns, args.batches)
     
     opath = args.outpath
