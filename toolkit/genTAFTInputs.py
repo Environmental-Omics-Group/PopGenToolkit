@@ -13,7 +13,7 @@ added: 05-11-2020
 import os
 import numpy as np
 from operator import itemgetter
-from kagami.comm import smap, pmap, fold, unpack, paste, checkall, checkany, fileName, checkInputFile, checkOutputDir
+from kagami.comm import smap, pmap, pickmap, fold, unpack, paste, checkall, checkany, fileName, checkInputFile, checkOutputDir
 from kagami.portals import tablePortal
 from kagami.dtypes import Table
 
@@ -34,10 +34,15 @@ def _genInfo(tabs):
     sids = np.array(tabs[0].rows_)
     assert checkall(tabs[1:], lambda x: np.all(x.rows_ == sids))
 
+    cmtx = smap(zip(*smap(tabs, lambda x: x.X_)), np.vstack)
+    cmtx = pickmap(cmtx, 
+                   lambda x: np.any(np.all(x==0, axis=0)) or np.any(np.all(x==0, axis=1)), 
+                   lambda x: x+1)
+    
     olns = smap(
-        zip(sids, *smap(tabs, lambda x: x.X_)), 
+        zip(sids, cmtx), 
         lambda x: [[x[0], 2]] + \
-                  smap(enumerate(x[1:]), unpack(lambda i,v: [f'Alelle_freq_Sample_{i}'] + list(v))) + \
+                  smap(enumerate(x[1]), unpack(lambda i,v: [f'Alelle_freq_Sample_{i}'] + list(v))) + \
                   [[]] # empty line
     )
     return olns
@@ -97,12 +102,9 @@ if __name__ == '__main__':
     for f,t in zip(ifiles,ctabs): print(f'  > [{t.nrow}] loci loaded from [{fileName(f)}]')
         
     sids = fold(smap(ctabs, lambda x: x.rows_), lambda x,y: np.intersect1d(x,y))
-    print(f'  > [{len(sids)}] loci shared in input files')
-
+    sids = sorted(sids, key = lambda x: (int(x.split('_',1)[0][8:]), int(x.split('_',1)[1])))
     ctabs = smap(ctabs, lambda x: x[sids])
-    if checkany(ctabs, lambda x: 0 in x.X_):
-        print('  > zero count(s) found, add 1 to all counts for valid TAFT input')
-        for t in ctabs: t.X_ += 1
+    print(f'  > [{len(sids)}] loci shared in input files')
     
     print(f'  > generating batches ...')
     olns = _genInfo(ctabs)

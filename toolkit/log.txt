@@ -1,0 +1,8 @@
+nohup: ignoring input
+  > loading index from [../data/temporal/taft_724321_MT_inputs/index.csv]
+  > [7] file listed
+  > running all batches with [7] inputs
+  > info files [info_chunk0.dat - info_chunk6.dat]
+  > file paths verified
+  > now running ...
+  > done
