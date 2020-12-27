@@ -1,6 +1,6 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/dev/peps/pep-0537/)
-[![R 3.6](https://img.shields.io/badge/R%3E%3D-3.6-red.svg)](https://cloud.r-project.org)
+[![R 3.6](https://img.shields.io/badge/R-3.6-red.svg)](https://cloud.r-project.org)
 
 
 # PopGenToolkit
