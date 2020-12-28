@@ -115,9 +115,11 @@ cbind.fill <- function(...){
 }
 
 plot.all <- function(finals, maxngt, labs){
+    finals <- lapply(finals, function (x) x[x$samplesize <= maxngt,])
     nplots <- length(finals)
     
-    NEW <-data.frame(cbind(1:maxngt, 
+    NEW <-data.frame(cbind(
+        1:maxngt, 
         do.call(cbind.fill,
                 lapply(finals, function (x) do.call(rbind,as.list(by(x$ppl,x$samplesize,mean)))))
     ))
