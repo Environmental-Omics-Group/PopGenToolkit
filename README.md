@@ -48,4 +48,4 @@ Rebuild linked repositories if needed.
 
 If you use PopGenToolkit in a publication, we would appreciate citations: 
 
-- *Anurag Chaturvedi, Jiarui Zhou, Joost A. M. Raeymaekers, et al. "Origin, maintenance and impact of standing genetic variation." Nature Communications, 2020. (Under revision)*
+- *Chaturvedi, A., Zhou, J., Raeymaekers, J.A.M. et al. Extensive standing genetic variation from a small number of founders enables rapid adaptation in Daphnia. Nat Commun 12, 4306 (2021). https://doi.org/10.1038/s41467-021-24581-z*
